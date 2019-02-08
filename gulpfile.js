@@ -143,6 +143,16 @@ gulp.task("copy-fonts", function() {
   .pipe(gulp.dest("build"));
 });
 
+/* Таск для копирования gif */
+gulp.task("copy-gif", function() {
+  return gulp.src([
+  "./source/img/**/*.gif"
+  ], {
+    base: "./source/"     /* Говорим что базовый путь начинается из корня */
+  })
+  .pipe(gulp.dest("build"));
+});
+
 /* Таск для удаления прошлой сборки */
 gulp.task("clean", function() {
   return del("build");
@@ -150,7 +160,7 @@ gulp.task("clean", function() {
 
 /* Удаление всех изображений*/
 gulp.task("clean-images", function() {
-  return del("./build/img/**/*.{png,jpg,svg,webp}");
+  return del("./build/img/**/*.{png,jpg,svg,webp,gif}");
 });
 
 /* Удаление всех шрифтов */
@@ -162,6 +172,7 @@ gulp.task("clean-fonts", function() {
 gulp.task("images-watch", function() {
   run(
     "clean-images",
+    "copy-gif",
     "images",
     "webp",
     "sprite",
@@ -186,6 +197,7 @@ gulp.task("build", function(done) {
     "style",
     "scripts",
     "images",
+    "copy-gif",
     "webp",
     "sprite",
     "html",
@@ -210,6 +222,6 @@ gulp.task("serve", function() {
   gulp.watch("source/sass/**/*.{scss,sass}", ["style"]);
   gulp.watch("source/*.html", ["html"]);
   gulp.watch("source/js/*.js", ["scripts"]);
-  gulp.watch("source/img/**/*.{png,jpg,svg,webp}", ["images-watch"]);
+  gulp.watch("source/img/**/*.{png,jpg,svg,webp,gif}", ["images-watch"]);
   gulp.watch("source/fonts/**/*.{woff,woff2}", ["fonts-watch"]);
 });
