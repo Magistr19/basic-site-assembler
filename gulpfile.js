@@ -130,9 +130,6 @@ gulp.task('sprite', function() {
     .pipe(svgstore({    /* Делает спрайт из SVG-файлов */
       inLineSvg: true
     }))
-     .pipe(imagemin([
-      imagemin.svgo()
-      ]))
     .pipe(rename('sprite.svg'))
     .pipe(gulp.dest('./build/img'));
 });
